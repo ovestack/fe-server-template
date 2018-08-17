@@ -1,0 +1,1 @@
+exports.default = require('../webpack/webpack.dev')

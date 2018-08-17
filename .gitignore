@@ -1,0 +1,9 @@
+.DS_Store
+dist/
+node_modules/
+*.log
+public/**
+*.lock
+typings/
+client
+views/**

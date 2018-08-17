@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "10"
+  - "9"
+  - "8"
+  - "7"
+  - "6"
+branches:
+  only:
+  - master
+before_script:
+  - npm install -g eslint@3.x babel-eslint@6
+script: "eslint -c .eslintrc.json --ignore-path .jshintignore ."
