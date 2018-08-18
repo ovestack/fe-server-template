@@ -11,6 +11,5 @@ exports.prod = {
 }
 
 exports.dev = {
-    cache: false,
-	debug: true
+    cache: false
 }
