@@ -6,4 +6,3 @@ public/**
 *.lock
 typings/
 client
-views/**
