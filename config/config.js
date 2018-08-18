@@ -15,7 +15,6 @@ exports = module.exports = {
     use: [
         'log',
         'favicon',
-        'session',
         'url',
         'routerMap',
         'html-processor',
@@ -23,7 +22,6 @@ exports = module.exports = {
         'client-debug',
         'form',
         'template',
-        'redis',
         'router'{{#webpack}},
         'webpack-dev-server'{{/webpack}}
     ]

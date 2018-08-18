@@ -2,7 +2,7 @@ var log4js = require('log4js')
 var mongoose = require('mongoose')
 
 var genModelName = function(model) {
-    model = model.replace(/\/[a-z]/g, ($1) => {
+    model = model.replace(/\/([a-z])/g, (str, $1) => {
         return '_' + $1.toUpperCase()
     })
     return `${model[0].toUpperCase()}${model.slice(1)}`
