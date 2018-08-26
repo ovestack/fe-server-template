@@ -28,7 +28,7 @@ function colorfulLog(level, log) {
 log4js.addLayout('nginx_log', (config) => {
     return (logEvent) => {
         var data = logEvent.data[0]
-        data['request-time'] = logEvent.startTime
+        data['request-time'] = new Date(logEvent.startTime).toLocaleString()
         data['level'] = logEvent.level.levelStr
         var log = '[:request-time] [:level] :remote-addr - -' +
         ' ":method :url :protocol/:http-version"' +
@@ -37,14 +37,14 @@ log4js.addLayout('nginx_log', (config) => {
         Object.keys(data).forEach((key) => {
             log = log.replace(':' + key, data[key])
         })
-        return colorfulLog(logEvent.level.levelStr, log)
+        return log
     }
 })
 
 log4js.addLayout('nginx_log_dev', (config) => {
     return (logEvent) => {
         var data = logEvent.data[0]
-        data['request-time'] = logEvent.startTime
+        data['request-time'] = new Date(logEvent.startTime).toLocaleString()
         data['level'] = logEvent.level.levelStr
         var log = '[:request-time] [:level] - - ":method :url"'
         Object.keys(data).forEach((key) => {
@@ -64,33 +64,38 @@ exports.dev = {
         }
     },
     categories: {
-        error: {
-            appenders: ['default']
-        },
-        mongo: {
-            appenders: ['default']
-        },
-        mq: {
-            appenders: ['default']
+        http: {
+            appenders: ['http'],
+            level: 'ALL'
         }
     }
 }
+
 exports.default = {
     appenders: {
         default: {
-            type: 'console'
-        },
-        error: {
-            type: 'file',
-            filename: getLog('error.log')
-        },
-        mongo: {
-            type: 'file',
-            filename: getLog('mongo.log')
-        },
-        mq: {
-            type: 'file',
-            filename: getLog('mq.log')
+            type: 'console',
+            layout: {
+                type: 'coloured'
+            }
+        }
+    },
+    categories: {
+        default: {
+            appenders: ['default'],
+            level: 'ALL'
+        }
+    }
+}
+
+exports.prod = {
+    appenders: {
+        multi: {
+            type: 'multiFile',
+            base: path.resolve(__dirname, '../../logs'),
+            property: 'categoryName',
+            extension: '.log',
+            compress: true
         },
         http: {
             type: 'dateFile',
@@ -104,24 +109,12 @@ exports.default = {
     },
     categories: {
         default: {
-            appenders: ['default'],
-            level: 'ALL'
+            appenders: ['multi'],
+            level: 'debug'
         },
         http: {
             appenders: ['http'],
             level: 'ALL'
-        },
-        error: {
-            appenders: ['error'],
-            level: 'ERROR'
-        },
-        mongo: {
-            appenders: ['mongo'],
-            level: 'WARN'
-        },
-        mq: {
-            appenders: ['mq'],
-            level: 'WARN'
         }
     },
     replaceConsole: true,

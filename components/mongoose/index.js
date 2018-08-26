@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
 
 var logger = getLogger('mongo')
 
-db.on('error', function() {
-    logger.error('connection error')
+db.on('error', function(err) {
+    logger.error(err)
 })
 db.once('open', function() {
     logger.info('connect!')
@@ -14,5 +14,8 @@ db.once('open', function() {
 mongoose.Promise = global.Promise
 
 module.exports = mongoose.connect(config.db, {
-    useMongoClient: true
+    useMongoClient: true,
+    autoReconnect: true
+}).catch(err => {
+    logger.error(err)
 })

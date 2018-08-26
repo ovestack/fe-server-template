@@ -1,5 +1,5 @@
 {
-    "verbose": false,
+    "verbose": true,
     "quiet": true,
     "script": "index.js",
     "execMap": {
