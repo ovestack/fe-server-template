@@ -24,7 +24,7 @@ var walk = function(dir, cb) {
 var requireController = function(app, dir) {
     let controller = require(dir)
     if (typeof controller === 'function') {
-        let ns = dir.replace(CONTROLLER_PATH, '') || '/'
+        let ns = (dir.replace(CONTROLLER_PATH, '') || '/').replace(path.sep, '/')
         let subRouter = new Router({
             prefix: ns
         })
