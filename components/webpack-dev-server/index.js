@@ -40,19 +40,26 @@ var devMiddleware = function (compiler, option) {
 
 var hotMiddleware = function (compiler, option) {
     var action = require('webpack-hot-middleware')(compiler, option);
-    compiler.plugin('compilation', function (compilation) {
-        compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+    compiler.hooks.compilation.tap('WebPackDevMiddleware', function(compilation) {
+        compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync('WebPackDevMiddleware', function (htmlPluginData, callback) {
             action.publish({ action: 'reload' })
-            cb()
-            return true
-        })
+            callback()
+        });
     })
-    return function* (next) {
-        var nextStep = yield middleware(action, this.req, this.res);
-        if (nextStep && next) {
-            yield* next;
-        }
-    };
+    return async (ctx, next) => {
+        let stream = new PassThrough()
+        ctx.body = stream
+        await action(ctx.req, {
+            write: stream.write.bind(stream),
+            writeHead: (status, headers) => {
+                ctx.status = status
+                ctx.set(headers)
+            },
+            end: function (content) {
+                ctx.body = content;
+            }
+        }, next)
+    }
 }
 
 module.exports = function (app) {
