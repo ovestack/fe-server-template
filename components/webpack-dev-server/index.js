@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var expressMiddleware = require('webpack-dev-middleware')
 var webpackConfig = getConfig('webpack')
 var isLocal = getConfig().isLocal
-
+var PassThrough = require('stream').PassThrough
 var compiler = webpack(webpackConfig)
 
 function middleware(doIt, req, res) {
