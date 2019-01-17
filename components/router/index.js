@@ -28,9 +28,13 @@ var requireController = function(app, dir) {
         let subRouter = new Router({
             prefix: ns
         })
-        logger.info(`挂载路由 ===> ${ns}`)
         controller(subRouter)
         app.use(subRouter.routes())
+        subRouter.stack.map(route => {
+            if (route.methods && route.methods.length) {
+                logger.info(`挂载路由 ===> ${route.path}`)
+            }
+        })
     }
 }
 
