@@ -2,7 +2,7 @@
 var fs = require('fs'),
     path = require('path'),
     Router = require('koa-router'),
-    logger = getLogger('app')
+    logger = getLogger('router')
 
 var config = getConfig()
 
