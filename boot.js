@@ -21,6 +21,10 @@ global.requireModel = function(model) {
     return mongoose.model(genModelName(model), schema)
 }
 
+global.requireMiddleware = function(middleware) {
+	return require('./middlewares/' + middleware)
+}
+
 global.requireService = function(service) {
 	return require('./services/' + service)
 }

@@ -6,5 +6,23 @@ module.exports = {
         host: '127.0.0.1',
         port: 6379,
         password: ''
-    }
+    },
+    staticServer: {
+        maxAge: 24 * 60 * 60
+    },
+    template: {
+        cache: true
+    },
+    use: [
+        'redis',
+        'template'
+    ],
+    middleware: [
+        'log',
+        'form',
+        'url',
+        'routerMap',
+        'staticServer',
+        'router'
+    ],
 }

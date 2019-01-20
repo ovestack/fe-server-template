@@ -1,8 +1,7 @@
 'use strict'
-
-var isObject = function(obj) {
-    return Object.prototype.toString.call(obj) === '[object Object]'
-}
+var {
+    isObject
+} = requireMod('util')
 
 var replaceVars = function(html) {
     var injection = getConfig('injection') || {}
@@ -11,7 +10,7 @@ var replaceVars = function(html) {
         if (isObject(data)) {
             data = JSON.stringify(data)
         }
-        html = html.replace('{' + key +'}', data)
+        html = html.replace(`{${key}}`, data)
     })
     injection = null
     return html

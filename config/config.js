@@ -7,22 +7,25 @@ exports = module.exports = {
     port: 3000,
     routerPath: path.resolve(__dirname, '../controllers'),
     livereload: false,
-    isLocal: true,
     redis: {
         showFriendlyErrorStack: true,
         keyPrefix: 'APP:'
     },
-    use: [
-        'log',
-        'favicon',
-        'url',
-        'routerMap',
-        'html-processor',
-        'staticServer',
-        'client-debug',
-        'form',
-        'template',
-        'router'{{#webpack}},
-        'webpack-dev-server'{{/webpack}}
-    ]
+    use: [],
+    middleware: [],
+    form: {
+        multipart: true,
+        formidable: {
+            keepExtensions: true,
+            hash: 'sha1'
+        }
+    },
+    staticServer: {
+        dir: path.join(__dirname, '../public')
+    },
+    template: {
+        root: path.join(__dirname, '../views'),
+        layout: false,
+        viewExt: 'html'
+    }
 }

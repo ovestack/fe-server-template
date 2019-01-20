@@ -1,10 +1,7 @@
-module.exports = {
-    type: 'schedule',
-    config: {
-        delay: 1,
-        args: [1,2],
-        callback: function(a,b) {
-            console.log('hello',a,b)
-        }
-    }
+'use strict'
+
+module.exports = exports = function(a, b) {
+    return console.log('hello', a, b)
 }
+
+module.exports.key = 'test schedule'

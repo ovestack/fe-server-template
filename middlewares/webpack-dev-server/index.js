@@ -1,9 +1,11 @@
 var webpack = require('webpack')
 var expressMiddleware = require('webpack-dev-middleware')
 var webpackConfig = getConfig('webpack')
-var isLocal = getConfig().isLocal
+var isLocal = getConfig('isLocal')
 var PassThrough = require('stream').PassThrough
-var compiler = webpack(webpackConfig)
+var compiler = webpack(
+    require(webpackConfig)
+)
 
 function middleware(doIt, req, res) {
     var originalEnd = res.end;
@@ -20,11 +22,9 @@ function middleware(doIt, req, res) {
 
 var devMiddleware = function (compiler, option) {
     var doIt = expressMiddleware(compiler, option);
-    return function* (next) {
-        var ctx = this;
+    return async function (ctx, next) {
         ctx.webpack = doIt;
-        var req = this.req;
-        var runNext = yield middleware(doIt, req, {
+        var runNext = await middleware(doIt, ctx.req, {
             end: function (content) {
                 ctx.body = content;
             },
@@ -33,7 +33,7 @@ var devMiddleware = function (compiler, option) {
             }
         });
         if (runNext) {
-            yield* next;
+            await next();
         }
     };
 };

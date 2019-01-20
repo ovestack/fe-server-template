@@ -1,4 +1,4 @@
-var redisConf = getConfig().redis,
+var redisConf = getConfig('redis'),
     redisStore = require('koa-redis')
 exports.default = {
     sessionKeys: ['fe-server'],

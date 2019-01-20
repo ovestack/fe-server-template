@@ -2,7 +2,7 @@
 var path = require('path'),
     fs = require('fs'),
     injection = requireMod('injection'),
-    staticConfig = getConfig('staticConfig'),
+    staticConfig = getConfig('staticServer'),
     url = require('url'),
     html_processor_config = getConfig('html-processor'),
     config = getConfig(),

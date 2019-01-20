@@ -15,7 +15,6 @@
     "koa": "^2.4.1",
     "koa-body": "^2.5.0",
     "koa-ejs": "^4.0.0",
-    "koa-jwt": "^3.3.1",
     "koa-redis": "^3.1.1",
     "koa-router": "^7.3.0",
     "koa-session": "^5.8.2",
@@ -29,7 +28,7 @@
     "socket.io": "^1.5.1"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"{{#webpack}},
+    "nodemon": "^1.18.9"{{#webpack}},
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",

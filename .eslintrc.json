@@ -27,7 +27,8 @@
         "getConfig": false,
         "getLogger": false,
         "requireService": false,
-        "genSchema": false
+        "genSchema": false,
+        "requireMiddleware": false
     },
     "parser": "babel-eslint"
 }
