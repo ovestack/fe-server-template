@@ -5,6 +5,7 @@ var Koa = require('koa'),
 require('./boot.js')
 
 var ErrorLogger = getLogger('error'),
+    logger = getLogger('app'),
 	config = getConfig(),
 	PORT = config.port
 
@@ -15,6 +16,7 @@ if (config.use && Array.isArray(config.use)) {
             mod(app)
         }
         mod = null
+        logger.info(`module: ${component} loaded`)
     })
 }
 
@@ -25,6 +27,7 @@ if (config.middleware && Array.isArray(config.use)) {
             mod(app)
         }
         mod = null
+        logger.info(`middleware: ${middleware} applied`)
     })
 }
 
