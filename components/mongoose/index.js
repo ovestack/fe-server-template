@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    config = getConfig(),
+    config = getConfig('db'),
     db = mongoose.connection
 
 var logger = getLogger('mongo')
@@ -13,7 +13,7 @@ db.once('open', function() {
 
 mongoose.Promise = global.Promise
 
-module.exports = mongoose.connect(config.db, {
+module.exports = mongoose.connect(config, {
     useMongoClient: true,
     autoReconnect: true
 }).catch(err => {
