@@ -22,6 +22,11 @@ var walk = function(dir, cb) {
 }
 
 var requireController = function(app, dir) {
+    try {
+        fs.accessSync(path.join(dir, path.sep, 'index.js'))
+    } catch (err) {
+        return
+    }
     let controller = require(dir)
     if (typeof controller === 'function') {
         let ns = (dir.replace(CONTROLLER_PATH, '') || '').replace(path.sep, '/')
@@ -32,7 +37,7 @@ var requireController = function(app, dir) {
         app.use(subRouter.routes())
         subRouter.stack.map(route => {
             if (route.methods && route.methods.length) {
-                logger.info(`挂载路由 ===> ${route.path}`)
+                logger.info(`挂载路由: [${route.methods}] ${route.path}`)
             }
         })
     }
